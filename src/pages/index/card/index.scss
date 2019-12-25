@@ -1,0 +1,86 @@
+@import "@styles/theme.scss";
+
+.main {
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-card {
+    background-color: #fff;
+    flex: 2.5;
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    margin: 20px 50px 70px 50px;
+    padding: 20px 40px;
+    box-shadow: 0 3px 9px 0 rgba(26, 2, 2, 0.37);
+
+    &-title {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        &-txt {
+            font-size: 34px;
+            color: $text-color;
+        }
+        &-btn {
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+    &-divider {
+        width: 100%;
+        height: 12px;
+        background-color: #FBBBA8;
+        border-radius: 12px;
+        margin-top:6px
+    }
+
+    &-info {
+        flex: 2.6;
+        display: flex;
+        flex-direction: row;
+        margin-top: 10px;
+    }
+
+    &-l,&-r {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        color: $text-color-light;
+        &-txt {
+            flex: 1;
+            font-size:34px;
+            line-height: 68px;
+        }
+        &-total {
+            flex: 1;
+            font-size:28px;
+            line-height: 56px;
+        }
+    }
+    &-r {
+        // @include border(left, 1px, solid, $text-color-light);
+        &-txt {
+            padding:0 30px;
+            @include border(left, 1px, solid, $text-color-light);
+        }
+        &-total {
+            padding:0 30px;
+            color: $text-color-lighter;
+        }
+    }
+
+    
+}

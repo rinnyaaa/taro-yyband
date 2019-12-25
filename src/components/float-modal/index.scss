@@ -1,0 +1,7 @@
+@import "@styles/theme.scss";
+
+.modal-content {
+    // margin: 20px;
+   height: 480px;
+    @include center()
+}

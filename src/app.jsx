@@ -1,7 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
-
+import 'taro-ui/dist/style/index.scss'
 import Index from './pages/index'
 
 import configStore from './store'
@@ -20,13 +20,50 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/plan/index',
+      'pages/evening/index',
+      'pages/my/index',
+      'pages/user-login/index',
+      'pages/index/setting/index',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '嘤嘤嘤行',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: "#666",
+      selectedColor: "#6190E8",
+      backgroundColor: "#fafafa",
+      borderStyle: 'black',
+      list: [{
+        pagePath: "pages/index/index",
+        iconPath: "./assets/tab-bar/home.png",
+        selectedIconPath: "./assets/tab-bar/home-active.png",
+        text: "记账"
+      }, {
+        pagePath: "pages/plan/index",
+        iconPath: "./assets/tab-bar/plan.png",
+        selectedIconPath: "./assets/tab-bar/plan-active.png",
+        text: "计划"
+      }, {
+        pagePath: "pages/evening/index",
+        iconPath: "./assets/tab-bar/goodevening.png",
+        selectedIconPath: "./assets/tab-bar/goodevening-active.png",
+        text: "晚安"
+      }, {
+        pagePath: "pages/my/index",
+        iconPath: "./assets/tab-bar/my.png",
+        selectedIconPath: "./assets/tab-bar/my-active.png",
+        text: "个人"
+      }]
+    },
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于小程序位置接口的效果展示'
+      }
     }
   }
 

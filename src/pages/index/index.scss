@@ -1,4 +1,41 @@
+@import "@styles/theme.scss";
+
 .index {
   flex-direction: column;
   width: 100%;
+}
+
+.home-nodata {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &-txt {
+    font-size: 28px;
+    color: $text-color-lighter;
+  }
+}
+
+.page{
+  
+}
+
+.home-modal {
+  &-tag {
+    margin: 0 10px;
+  }
+  &-swiper {
+    &-item {
+        // display    : inline-block;
+        margin: 0 10px;
+    }
+}
+  
+}
+//隐藏滚动条
+::-webkit-scrollbar { 
+	width: 0; 
+	height: 0; 
+	color: transparent; 
 }
