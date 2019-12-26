@@ -92,9 +92,7 @@ export default class RecordModal extends Taro.Component {
     fetch({ url: API_RECORD, showToast: true, payload, method: 'POST' }).then(res => {
       if (res) {
         this.props.dispatchAccount()
-        this.setState({
-          isClose: true
-        })
+        this.props.onClose()
       } else {
         console.log('record err')
       }
@@ -125,7 +123,7 @@ export default class RecordModal extends Taro.Component {
     const month = this.state.dateSel.split("-")[1]
     const day = this.state.dateSel.split("-")[2]
     return (
-      <AtFloatLayout isOpened={isOpened&&!isClose} title={title} onClose={onClose}>
+      <AtFloatLayout isOpened={isOpened} title={title} onClose={onClose}>
         <View className="home-modal">
           {/* <Radio value='选中' checked>选中</Radio>
           <Radio style='margin-left: 20rpx' value='未选中'>未选中</Radio> */}

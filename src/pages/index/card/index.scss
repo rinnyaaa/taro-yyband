@@ -2,7 +2,7 @@
 
 .main {
     width: 100%;
-    height: 50%;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
@@ -40,9 +40,14 @@
     &-divider {
         width: 100%;
         height: 12px;
+        background-color: #fbbba88a;
+        border-radius: 12px;
+        margin-top:6px;
+        &-sub {
+        height: 12px;
         background-color: #FBBBA8;
         border-radius: 12px;
-        margin-top:6px
+        }
     }
 
     &-info {

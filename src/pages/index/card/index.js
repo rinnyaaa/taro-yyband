@@ -41,6 +41,7 @@ export default class Card extends Taro.Component {
 
   render() {
     const { budget, totalOut, wage,accountName,totalIn } = this.props.account;
+    const budgetPercent = Math.floor((totalOut / budget)*10000)/100>100||100
     return (
       <View className="main">
         <View style="flex:1">
@@ -48,7 +49,10 @@ export default class Card extends Taro.Component {
         <View className="home-card">
           {/* <Text> Test </Text> */}
           <View className="home-card-title"><Text className="home-card-title-txt"> {accountName} </Text><View><AtButton className="home-card-title-btn" type="primary" size="small" circle={true} onClick={this.handleSetting}>设置</AtButton></View></View>
-          <View className="home-card-divider"></View>
+          <View className="home-card-divider">
+          <View className="home-card-divider-sub" style={{width:budgetPercent+'%'}}>
+            </View>
+          </View>
           <View className="home-card-info">
             <View className="home-card-l">
               <Text className="home-card-l-total"> {Math.floor((totalOut / budget)*10000)/100}%预算已用 </Text>

@@ -10,3 +10,6 @@ export const TOTAL_OUT = 'TOTAL_OUT'
 export const TOTAL_IN = 'TOTAL_IN'
 
 export const RECORD_TYPE = 'RECORD_TYPE'
+
+
+
