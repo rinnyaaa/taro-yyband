@@ -1,21 +1,21 @@
 import Taro from '@tarojs/taro';
-import { View, Text, Picker, Swiper, SwiperItem, ScrollView } from '@tarojs/components';
-import { AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon } from "taro-ui";
-import { connect } from "@tarojs/redux"
-import { dispatchAccount,type } from "../../../actions/home";
+import {View, Text, Picker, Swiper, SwiperItem, ScrollView} from '@tarojs/components';
+import {AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon} from "taro-ui";
+import {connect} from "@tarojs/redux"
+import {dispatchAccount, type} from "../../../actions/home";
 import fetch from "@utils/request"
-import { API_RECORD } from '@constants/api'
+import {API_RECORD} from '@constants/api'
 
 import './index.scss'
 
 @connect(state => state.home, dispatch => ({
-  dispatchAccount() {
-    dispatch(dispatchAccount())
-  },
-  dispatchType() {
-    dispatch(type())
-  }
-})
+    dispatchAccount() {
+      dispatch(dispatchAccount())
+    },
+    dispatchType() {
+      dispatch(type())
+    }
+  })
 )
 export default class RecordModal extends Taro.Component {
   state = {
@@ -23,20 +23,8 @@ export default class RecordModal extends Taro.Component {
     cost: '',
     memo: '',
     isOutcome: true,
-    selectedType:'',
+    selectedType: '',
     isClose: false
-    // list: [
-    //   {
-    //     value: '支出',
-    //     text: '支出',
-    //     checked: true
-    //   },
-    //   {
-    //     value: '收入',
-    //     text: '收入',
-    //     checked: false
-    //   },
-    // ]
   }
   static options = {
     addGlobalClass: true
@@ -44,7 +32,7 @@ export default class RecordModal extends Taro.Component {
 
 
   static defaultProps = {
-    isOpened: true,
+    isOpened: '',
     title: '',
     onClose: () => {
       console.log('close')
@@ -52,7 +40,7 @@ export default class RecordModal extends Taro.Component {
   };
 
   componentDidMount() {
-   this.props.dispatchType()
+    this.props.dispatchType()
   }
 
   onDateChange = e => {
@@ -78,34 +66,30 @@ export default class RecordModal extends Taro.Component {
   }
 
   handleConfirm() {
-    const {cost,isOutcome,dateSel,memo,selectedType} = this.state
-    const payload = {
-      consumption: Number(cost),
-      isOut: isOutcome,
-      typeId: selectedType,
-      remark:memo,
-      time:dateSel
+    const _self = this
+    const {cost, isOutcome, dateSel, memo, selectedType,isClose} = this.state
+    console.log('点击确定前的 this.state.isClose %s',this.state.isClose);
+    let _tmp = !isClose;
+    console.log(_self.setState);
+    if (_tmp) {
+      _self.setState({
+        isClose: true
+      })
+    } else {
+      _self.setState({
+        isClose: false
+      })
     }
-    Taro.showLoading({
-      title: '少女记账中...'
-    })
-    fetch({ url: API_RECORD, showToast: true, payload, method: 'POST' }).then(res => {
-      if (res) {
-        this.props.dispatchAccount()
-        this.props.onClose()
-      } else {
-        console.log('record err')
-      }
-    });
+    console.log('点击确定后的 this.state.isClose %s',this.state.isClose);
   }
 
   selectType(id) {
     this.setState({
-      selectedType:id
+      selectedType: id
     })
   }
 
-  judgeType(id) { 
+  judgeType(id) {
     return this.state.selectedType === id
   }
 
@@ -116,24 +100,28 @@ export default class RecordModal extends Taro.Component {
     })
   }
 
-  
+
   render() {
-    const { isOpened, title, onClose,recordType } = this.props;
-    const { isOutcome,isClose } = this.state
+    const {isOpened, title, onClose, recordType} = this.props;
+    console.log('组件内部的 isOpened %s',isOpened);
+    const {isOutcome, isClose} = this.state
+    console.log('组件内部的 !isClose %s',!isClose);
     const month = this.state.dateSel.split("-")[1]
     const day = this.state.dateSel.split("-")[2]
     return (
-      <AtFloatLayout isOpened={isOpened} title={title} onClose={onClose}>
+      <AtFloatLayout isOpened={isOpened && !isClose} title={title} onClose={onClose}>
         <View className="home-modal">
           {/* <Radio value='选中' checked>选中</Radio>
           <Radio style='margin-left: 20rpx' value='未选中'>未选中</Radio> */}
           <View className="home-modal-picker">
             <View className="tags">
-              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle onClick={this.handleChooseType.bind(this)}>支出</AtTag>
-              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle onClick={this.handleChooseType.bind(this)}>收入</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle
+                     onClick={this.handleChooseType.bind(this)}>支出</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle
+                     onClick={this.handleChooseType.bind(this)}>收入</AtTag>
             </View>
             <View className="home-modal-picker-bg">
-              <Picker mode='date' onChange={this.onDateChange} >
+              <Picker mode='date' onChange={this.onDateChange}>
                 <View className='picker-txt'>
                   {`${month}月${day}日`}
                 </View>
@@ -165,9 +153,10 @@ export default class RecordModal extends Taro.Component {
           </Swiper> */}
           <ScrollView scrollX scrollWithAnimation className='home-modal-swiper'>
             {
-              recordType.map((item)=>{
-              // return(<AtTag circle className="home-modal-swiper-item" active={this.judgeType.bind(this,item._id)} onClick={this.selectType.bind(this,item._id)}>{item.name}</AtTag>)
-              return(<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)} onClick={this.selectType.bind(this,item._id)}>{item.name}</AtTag>)
+              recordType.map((item) => {
+                // return(<AtTag circle className="home-modal-swiper-item" active={this.judgeType.bind(this,item._id)} onClick={this.selectType.bind(this,item._id)}>{item.name}</AtTag>)
+                return (<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)}
+                               onClick={this.selectType.bind(this, item._id)}>{item.name}</AtTag>)
               })
             }
           </ScrollView>
