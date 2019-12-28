@@ -33,6 +33,15 @@
 }
   
 }
+
+.container {
+  // height: 100%;
+  width: 100%;
+  @include center;
+  flex-direction: column;
+}
+
+
 //隐藏滚动条
 ::-webkit-scrollbar { 
 	width: 0; 

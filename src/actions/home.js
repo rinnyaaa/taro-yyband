@@ -1,5 +1,5 @@
-import {ACCOUNT_NAME, ACCOUNT_BUDGET,ACCOUNT_INCOME,ACCOUNT_INFO,RECORD_TYPE} from '../constants/home'
-import {API_Account_INFO,API_TYPE} from '../constants/api'
+import {ACCOUNT_NAME, ACCOUNT_BUDGET,ACCOUNT_INCOME,ACCOUNT_INFO,RECORD_TYPE,RECENT_RECORD} from '../constants/home'
+import {API_Account_INFO,API_TYPE,API_RECORD} from '../constants/api'
 import { createAction } from "../utils/redux";
 
 export const dispatchAccount = payload => createAction({
@@ -14,6 +14,11 @@ export const type = payload => createAction({
   payload
 });
 
+export const getRecentRecord = payload => createAction({
+  url: API_RECORD+'/2',
+  type: RECENT_RECORD,
+  payload
+});
 // export const dispatchAddRecord = payload => createAction({
 //   url: API_Record,
 //   type: ACCOUNT_INFO,

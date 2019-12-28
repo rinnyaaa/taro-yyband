@@ -5,10 +5,12 @@
 export const ACCOUNT_NAME = 'ACCOUNT_NAME'
 export const ACCOUNT_BUDGET = 'ACCOUNT_BUDGET'
 export const ACCOUNT_INCOME = 'ACCOUNT_INCOME'
+
 export const ACCOUNT_INFO = 'ACCOUNT_INFO'
 export const TOTAL_OUT = 'TOTAL_OUT'
 export const TOTAL_IN = 'TOTAL_IN'
 
+export const RECENT_RECORD = 'RECENT_RECORD'
 export const RECORD_TYPE = 'RECORD_TYPE'
 
 

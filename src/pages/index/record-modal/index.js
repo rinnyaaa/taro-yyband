@@ -1,38 +1,41 @@
 import Taro from '@tarojs/taro';
-import {View, Text, Picker, Swiper, SwiperItem, ScrollView} from '@tarojs/components';
-import {AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon} from "taro-ui";
-import {connect} from "@tarojs/redux"
-import {dispatchAccount, type} from "../../../actions/home";
+import { View, Text, Picker, Swiper, SwiperItem, ScrollView } from '@tarojs/components';
+import { AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon } from "taro-ui";
+import { connect } from "@tarojs/redux"
+import { dispatchAccount, type,getRecentRecord } from "../../../actions/home";
 import fetch from "@utils/request"
-import {API_RECORD} from '@constants/api'
-
+import { API_RECORD } from '@constants/api'
+import moment from "moment"
 import './index.scss'
 
 @connect(state => state.home, dispatch => ({
-    dispatchAccount() {
-      dispatch(dispatchAccount())
-    },
-    dispatchType() {
-      dispatch(type())
-    }
-  })
+  dispatchAccount() {
+    dispatch(dispatchAccount())
+  },
+  dispatchType() {
+    dispatch(type())
+  },
+  getRecentRecord() {
+    dispatch(getRecentRecord())
+  }
+})
 )
 export default class RecordModal extends Taro.Component {
   state = {
-    dateSel: '2018-04-22',
+    dateSel: moment(Date()).format('YYYY-MM-DD'),
     cost: '',
     memo: '',
     isOutcome: true,
     selectedType: '',
     isClose: false
   }
+
   static options = {
     addGlobalClass: true
   }
 
-
   static defaultProps = {
-    isOpened: '',
+    isOpened: true,
     title: '',
     onClose: () => {
       console.log('close')
@@ -66,21 +69,26 @@ export default class RecordModal extends Taro.Component {
   }
 
   handleConfirm() {
-    const _self = this
-    const {cost, isOutcome, dateSel, memo, selectedType,isClose} = this.state
-    console.log('点击确定前的 this.state.isClose %s',this.state.isClose);
-    let _tmp = !isClose;
-    console.log(_self.setState);
-    if (_tmp) {
-      _self.setState({
-        isClose: true
-      })
-    } else {
-      _self.setState({
-        isClose: false
-      })
+    const { cost, isOutcome, dateSel, memo, selectedType } = this.state
+    const payload = {
+      consumption: Number(cost),
+      isOut: isOutcome,
+      typeId: selectedType,
+      remark: memo,
+      time: dateSel+" "+ moment(Date()).format('YYYY-MM-DD HH:mm:ss').split(" ")[1]
     }
-    console.log('点击确定后的 this.state.isClose %s',this.state.isClose);
+    Taro.showLoading({
+      title: '少女记账中...'
+    })
+    fetch({ url: API_RECORD, showToast: true, payload, method: 'POST' }).then(res => {
+      if (res) {
+        this.props.dispatchAccount()
+        this.props.getRecentRecord()
+        this.props.onClose()
+      } else {
+        console.log('record err')
+      }
+    });
   }
 
   selectType(id) {
@@ -102,61 +110,34 @@ export default class RecordModal extends Taro.Component {
 
 
   render() {
-    const {isOpened, title, onClose, recordType} = this.props;
-    console.log('组件内部的 isOpened %s',isOpened);
-    const {isOutcome, isClose} = this.state
-    console.log('组件内部的 !isClose %s',!isClose);
+    const { isOpened, title, onClose, recordType } = this.props;
+    const { isOutcome, isClose } = this.state
     const month = this.state.dateSel.split("-")[1]
     const day = this.state.dateSel.split("-")[2]
+    const end = moment(Date()).format('YYYY-MM-DD')
     return (
-      <AtFloatLayout isOpened={isOpened && !isClose} title={title} onClose={onClose}>
+      <AtFloatLayout isOpened={isOpened} title={title} onClose={onClose}>
         <View className="home-modal">
           {/* <Radio value='选中' checked>选中</Radio>
           <Radio style='margin-left: 20rpx' value='未选中'>未选中</Radio> */}
           <View className="home-modal-picker">
             <View className="tags">
-              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle
-                     onClick={this.handleChooseType.bind(this)}>支出</AtTag>
-              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle
-                     onClick={this.handleChooseType.bind(this)}>收入</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle onClick={this.handleChooseType.bind(this)}>支出</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle onClick={this.handleChooseType.bind(this)}>收入</AtTag>
             </View>
             <View className="home-modal-picker-bg">
-              <Picker mode='date' onChange={this.onDateChange}>
+              <Picker mode='date' onChange={this.onDateChange} end={end}>
                 <View className='picker-txt'>
                   {`${month}月${day}日`}
                 </View>
               </Picker>
             </View>
           </View>
-          {/* 选择类别 */}
-          {/* <Swiper
-            className='home-modal-swiper'
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            vertical={false}
-            circular
-            indicatorDots
-          >
-            <SwiperItem>
-              <View className='home-modal-swiper-1'>
-              <AtTag>标签</AtTag>
-              <AtTag>标签</AtTag>
-              <AtTag>标签</AtTag>
-              <AtTag>标签</AtTag>
-              </View>
-            </SwiperItem>
-            <SwiperItem>
-              <View className='home-modal-swiper-2'>
-                <AtIcon value='clock' size='30' color='#6190e8'></AtIcon>
-              </View>
-            </SwiperItem>
-          </Swiper> */}
           <ScrollView scrollX scrollWithAnimation className='home-modal-swiper'>
             {
               recordType.map((item) => {
                 // return(<AtTag circle className="home-modal-swiper-item" active={this.judgeType.bind(this,item._id)} onClick={this.selectType.bind(this,item._id)}>{item.name}</AtTag>)
-                return (<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)}
-                               onClick={this.selectType.bind(this, item._id)}>{item.name}</AtTag>)
+                return (<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)} onClick={this.selectType.bind(this, item._id)}>{item.name}</AtTag>)
               })
             }
           </ScrollView>

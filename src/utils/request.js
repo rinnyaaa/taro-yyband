@@ -24,7 +24,6 @@ function updateStorage(data = {}) {
 export default async function (options) {
   const { url, payload, method = 'GET', showToast = true, autoLogin = true } = options
   const token = await getStorage('token')
-  console.log(token)
   // payload.token = token || ''
   // const header = token ? { 'WX-PIN-SESSION': token, 'X-WX-3RD-Session': token } : {}
   const header = token ? { 'Authorization': 'Bearer '+ token } : {}
@@ -38,7 +37,6 @@ export default async function (options) {
     data: payload,
     header
   }).then(async (res) => {
-    console.log(res)
     const { code, data } = res.data
     if (code !== CODE_SUCCESS) {
       if (code === CODE_AUTH_EXPIRED) {
