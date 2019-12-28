@@ -1,4 +1,4 @@
-import { ACCOUNT_NAME, ACCOUNT_BUDGET, ACCOUNT_INCOME, ACCOUNT_INFO, TOTAL_OUT, TOTAL_IN, RECORD_TYPE } from '../constants/home'
+import { ACCOUNT_NAME, ACCOUNT_BUDGET, ACCOUNT_INCOME, ACCOUNT_INFO, TOTAL_OUT, TOTAL_IN, RECORD_TYPE,RECENT_RECORD } from '../constants/home'
 const INITIAL_STATE = {
   account: {
     accountName: '我的账本',
@@ -7,7 +7,8 @@ const INITIAL_STATE = {
     totalOut: 0,
     totalIn: 0
   },
-  recordType:[]
+  recordType: [],
+  recentRecords: [],
 }
 
 export default function home(state = INITIAL_STATE, action) {
@@ -24,6 +25,12 @@ export default function home(state = INITIAL_STATE, action) {
       return {
         ...state,
         recordType
+      }
+    case RECENT_RECORD:
+      const recentRecords = action.payload
+      return {
+        ...state,
+        recentRecords
       }
 
     default:

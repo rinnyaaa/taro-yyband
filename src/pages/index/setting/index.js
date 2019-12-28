@@ -2,18 +2,22 @@ import Taro from '@tarojs/taro';
 import { View, Text, } from '@tarojs/components';
 import { AtList, AtListItem, AtNavBar, AtInput, AtButton } from "taro-ui";
 import PopUp from '@components/float-modal/index'
+import { connect } from "@tarojs/redux";
+import { dispatchAccount } from "../../../actions/home";
+import fetch from "@utils/request";
+import { API_Account_INFO } from '@constants/api'
 import './index.scss'
 
+@connect(state => state.home, dispatch => ({
+  dispatchAccount() {
+    dispatch(dispatchAccount())
+  },
+}))
 export default class Setting extends Taro.Component {
   state = {
-    accountName: '我的账本',
-    budget: '0.00',
-    income: '0.00',
-    // 信息修改组件相关
     isOpened: false,
     val: '',
     title: '',
-
   }
 
   // static defaultProps = {
@@ -23,6 +27,10 @@ export default class Setting extends Taro.Component {
   config = {
     navigationBarTitleText: "设置"
   };
+
+  componentDidMount() {
+    this.props.dispatchAccount()
+  }
 
   handleClick() {
     console.log('click')
@@ -34,6 +42,7 @@ export default class Setting extends Taro.Component {
     });
   }
 
+  //订阅消息
   handleSwitch() {
     wx.requestSubscribeMessage({
       tmplIds: ['qbgzVkDC8b1Btpj3UPPujIVOE1wqAVsjb7gckUCpJBk'],
@@ -56,7 +65,7 @@ export default class Setting extends Taro.Component {
     })
   }
 
-  changeIncome() {
+  changeWage() {
     this.setState({
       title: '修改月收入',
       isOpened: true
@@ -68,33 +77,59 @@ export default class Setting extends Taro.Component {
     switch (this.state.title) {
       case '修改账本名字': {
         this.setState({
-        accountName: this.state.val
-      });} break;
-      case '修改预算': this.setState({
-        budget: this.state.val
-      }); break;
-      case '修改月收入': this.setState({
-        income: this.state.val
-      }); break;
+          accountName: this.state.val
+        });
+        this.handleComfirmAccountInfo({ accountName: this.state.val })
+      } break;
+      case '修改预算':
+        this.setState({
+          budget: this.state.val
+        });
+        this.handleComfirmAccountInfo({ budget: Number(this.state.val) })
+        break;
+      case '修改月收入':
+        this.setState({
+          wage: this.state.val
+        });
+        this.handleComfirmAccountInfo({ wage: Number(this.state.val) })
+        break;
       default: break;
     }
     this.setState({
-      isOpened: false
+      isOpened: false,
+      val:''
     })
-    Taro.showToast({
-      title: '修改成功'
-    })
+    // Taro.showToast({
+    //   title: '修改成功'
+    // })
 
+  }
+
+  handleComfirmAccountInfo(payload) {
+    // const payload = {accountName:"我的"}
+    fetch({ url: API_Account_INFO, method: 'POST', showToast: true, payload }).then(res => {
+      // if (res) {
+      console.log(res + '1111')
+      this.props.dispatchAccount()
+      Taro.showToast({
+        title: '修改成功',
+        icon: 'none'
+      })
+      // } else {
+      // }
+    });
   }
 
   changeVal(value) {
     this.setState({
-      val:value
+      val: value
     })
   }
   render() {
     const isWx = process.env.TARO_ENV === 'weapp';
-    const { accountName, budget, income, isOpened, title, val } = this.state
+    const { isOpened, title, val } = this.state
+    const { budget, accountName, wage } = this.props.account;
+
     const type = title.substring(2, title.length)
     return (
       <View>
@@ -116,11 +151,11 @@ export default class Setting extends Taro.Component {
           <AtListItem title='预算' arrow='right' iconInfo={{
             size:
               25, color: '#78A4FA', value: 'star-2',
-          }} onClick={this.changeBudget.bind(this)} extraText={'￥'+budget} />
+          }} onClick={this.changeBudget.bind(this)} extraText={'￥' + budget} />
           <AtListItem title='本月收入' arrow='right' iconInfo={{
             size:
               25, color: '#78A4FA', value: 'star-2',
-          }} onClick={this.changeIncome.bind(this)} extraText={'￥'+income} />
+          }} onClick={this.changeWage.bind(this)} extraText={'￥' + wage} />
           {/* <AtListItem title='日推送结算' arrow='right' onClick={this.handleClick} /> */}
           {isWx && <AtListItem title='日结算推送' arrow='right' onClick={this.handleSwitch} extraText='未订阅' />}
 

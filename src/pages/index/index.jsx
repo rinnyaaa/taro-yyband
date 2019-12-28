@@ -10,7 +10,6 @@ import {
 } from "taro-ui";
 
 import cardBg from "@assets/card.jpg";
-import nodata from "@assets/nodata.png";
 
 import { connect } from "@tarojs/redux";
 import { getWindowHeight } from "../../utils/style";
@@ -21,10 +20,7 @@ import "./index.scss";
 import { fail } from "assert";
 
 @connect(
-  ({ counter, login }) => ({
-    counter,
-    login
-  }),
+  state => state.home,
   dispatch => ({
     // add() {
     //   dispatch(add());
@@ -90,12 +86,15 @@ class Index extends Component {
   render() {
     const height = getWindowHeight(true, 0.5, -46);
     const { isOpened, isOpened_curtain } = this.state;
+    const { records } = this.props.recentRecords;
     const renderAccountList = () => {
       const { accountLength } = this.state;
       // if (accountLength === 0) {
       return (
-        <View className="home-nodata" style={{ height: height, width: "100%" }}>
-          {accountLength === 0 && (
+        //Taro的坑！！！！！！！！！！
+        // <View className="home-nodata" style={{ height, width: "100%" }}>
+        <View className="home-nodata" style={"height:" + height}>
+          {/* {records&&records.length === 0 && (
             <View style="text-align:center">
               <Image style="width:138px;height:125px" src={nodata}></Image>
               <View>
@@ -103,11 +102,12 @@ class Index extends Component {
               </View>
             </View>
           )}
-          {!(accountLength === 0) && (
+          {(records&&records.length!==0) && (
             <View style="width:90%">
-              <RecentRecords />
             </View>
-          )}
+          )} */}
+          <RecentRecords />
+
           <View style="margin:20px 62px;width:60%">
             <AtButton
               type="primary"
@@ -137,14 +137,16 @@ class Index extends Component {
           tabList={tabList}
           onClick={this.handleClick.bind(this)}
         >
-          <AtNoticebar marquee icon="volume-plus" close={true}>
+          {/* <AtNoticebar marquee icon="volume-plus" close={true}>
             大碗宽面正在烧制中......
-          </AtNoticebar>
+          </AtNoticebar> */}
 
           <AtTabsPane current={this.state.current} index={0}>
             {/* 本月账单 */}
             <View style="text-align: center;">
-              <View style={{ height: height, width: "100%",position:"relative" }}>
+              <View
+                style={{ height: height, width: "100%", position: "relative" }}
+              >
                 <Image style={{ height: "100%", width: "100%" }} src={cardBg} />
                 <Card />
               </View>

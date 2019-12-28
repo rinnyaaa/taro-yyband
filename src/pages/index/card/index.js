@@ -25,12 +25,6 @@ export default class Card extends Taro.Component {
 
   componentDidMount() {
     this.props.dispatchAccount()
-
-    this.getAccountInfo()
-  }
-
-  getAccountInfo() {
- 
   }
 
   handleSetting() {
