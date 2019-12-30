@@ -35,7 +35,8 @@ export default class Card extends Taro.Component {
 
   render() {
     const { budget, totalOut, wage,accountName,totalIn } = this.props.account;
-    const budgetPercent = Math.floor((totalOut / budget)*10000)/100>100||100
+    const budget_percent = Math.floor((totalOut / budget)*10000)/100
+    const budgetPercent = (budget_percent<100)?budget_percent:100
     return (
       <View className="main">
         <View style="flex:1">

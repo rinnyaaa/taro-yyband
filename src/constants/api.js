@@ -4,7 +4,8 @@
  */
 /* eslint-disable */
 // export const host = HOST
-export const host = 'http://192.168.43.137:7001'
+// export const host = 'http://192.168.1.7:7001'
+export const host = 'http://192.168.0.116:7001'
 // export const hostM = HOST_M
 /* eslint-enable */
 // user
@@ -17,6 +18,8 @@ export const API_Account_INFO= `${host}/api/account`;
 //record
 //recent record `${host}/api/record/num`
 export const API_RECORD= `${host}/api/record`;
+export const API_RECORD_BY_MONTH= `${host}/api/recordByMonth`;
 
 //type
 export const API_TYPE= `${host}/api/type`;
+
