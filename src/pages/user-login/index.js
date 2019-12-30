@@ -1,7 +1,6 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 import { AtForm, AtInput, AtButton } from 'taro-ui'
-import logo from '@assets/logo.jpg'
 
 // import { connect } from "@tarojs/redux";
 // import { login, logout } from "../../actions/login";
@@ -98,7 +97,7 @@ export default class Login extends Taro.Component {
     return (
       <View className="container">
         <View className="login-form">
-          <View style="text-align:center"><Image style="width:200px;height:200px" src={logo}></Image></View>
+          <View style="text-align:center"><Image style="width:200px;height:200px" src='http://www.zard1991.cn:8080/image/yyy/logo.jpg'></Image></View>
           <AtForm
             onSubmit={this.onSubmit.bind(this)}
             onReset={this.onReset.bind(this)}
@@ -119,7 +118,7 @@ export default class Login extends Taro.Component {
               value={this.state.password}
               onChange={this.handleChangePwd.bind(this)}
             />
-         
+
           </AtForm>
           <View style="margin-top:20px" >
               <AtButton type="primary" onClick={this.login.bind(this)}>登录</AtButton>
@@ -130,7 +129,6 @@ export default class Login extends Taro.Component {
             </View>
         </View>
       </View>
-
     )
   }
 }

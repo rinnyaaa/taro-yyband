@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   },
   recordType: [],
   recentRecords: [],
+  demoList:[3,4,5]
 }
 
 export default function home(state = INITIAL_STATE, action) {

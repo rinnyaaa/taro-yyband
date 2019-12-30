@@ -1,4 +1,4 @@
-const HOST = '"http://127.0.0.1:7001"'
+const HOST = '"http://www.zard1991.cn:7001"'
 
 module.exports = {
   env: {

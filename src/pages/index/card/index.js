@@ -1,8 +1,8 @@
 import Taro from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
-import { AtButton } from "taro-ui";
+import {View, Text} from '@tarojs/components';
+import {AtButton} from "taro-ui";
 import './index.scss'
-import { connect } from "@tarojs/redux";
+import {connect} from "@tarojs/redux";
 import {dispatchAccount} from "../../../actions/home";
 
 // import GET_ACCOUNT_INFO from "@constants/home"
@@ -34,29 +34,35 @@ export default class Card extends Taro.Component {
   }
 
   render() {
-    const { budget, totalOut, wage,accountName,totalIn } = this.props.account;
-    const budgetPercent = Math.floor((totalOut / budget)*10000)/100>100||100
+    const {budget, totalOut, wage, accountName, totalIn} = this.props.account;
+    console.log(totalOut);
+    console.log(budget);
+
+    const budgetPercent = ((Number.parseFloat(totalOut) / budget) * 100).toFixed(2) > 100 ? 100 : ((Number.parseFloat(totalOut) / budget) * 100).toFixed(2)
+    console.log(budgetPercent);
     return (
       <View className="main">
         <View style="flex:1">
         </View>
         <View className="home-card">
           {/* <Text> Test </Text> */}
-          <View className="home-card-title"><Text className="home-card-title-txt"> {accountName} </Text><View><AtButton className="home-card-title-btn" type="primary" size="small" circle={true} onClick={this.handleSetting}>设置</AtButton></View></View>
+          <View className="home-card-title"><Text className="home-card-title-txt"> {accountName} </Text><View><AtButton
+            className="home-card-title-btn" type="primary" size="small" circle={true}
+            onClick={this.handleSetting}>设置</AtButton></View></View>
           <View className="home-card-divider">
-          <View className="home-card-divider-sub" style={{width:budgetPercent+'%'}}>
+            <View className="home-card-divider-sub" style={{width: budgetPercent + '%'}}>
             </View>
           </View>
           <View className="home-card-info">
             <View className="home-card-l">
-              <Text className="home-card-l-total"> {Math.floor((totalOut / budget)*10000)/100}%预算已用 </Text>
+              <Text className="home-card-l-total"> {Math.floor((totalOut / budget) * 10000) / 100}%预算已用 </Text>
               <Text className="home-card-l-txt">总支出</Text>
-              <Text className="home-card-l-txt">￥{totalOut}</Text>
+              <Text className="home-card-l-txt">￥{totalOut.toFixed(2)}</Text>
             </View>
             <View className="home-card-r">
-              <View className="home-card-r-total"> {Math.floor((totalOut / wage)*10000)/100}%工资已用 </View>
+              <View className="home-card-r-total"> {Math.floor((totalOut / wage) * 10000) / 100}%工资已用 </View>
               <View className="home-card-r-txt">总收入</View>
-              <View className="home-card-r-txt">￥{totalIn}</View>
+              <View className="home-card-r-txt">￥{totalIn.toFixed(2)}</View>
             </View>
           </View>
         </View>

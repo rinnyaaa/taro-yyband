@@ -55,6 +55,11 @@ const config = {
   },
   copy: {
     patterns: [
+      {
+        ignore: ['ec-canvas.js', 'wx-canvas.js'],
+        from: 'ecahrts.js',
+        to: `dist/npm/echarts12/dist/${process.env.TARO_ENV}/components/echart/echarts.js`,
+      }
     ],
     options: {
     }
@@ -118,7 +123,7 @@ const config = {
         }
       }
     },
-    esnextModules: ['taro-ui']
+    esnextModules: ['taro-ui','taro-echarts']
   }
 }
 

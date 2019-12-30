@@ -1,24 +1,24 @@
 import Taro from '@tarojs/taro';
-import { View, Text, Picker, Swiper, SwiperItem, ScrollView } from '@tarojs/components';
-import { AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon } from "taro-ui";
-import { connect } from "@tarojs/redux"
-import { dispatchAccount, type,getRecentRecord } from "../../../actions/home";
+import {View, Text, Picker, Swiper, SwiperItem, ScrollView} from '@tarojs/components';
+import {AtButton, AtFloatLayout, AtTag, AtInput, AtForm, AtIcon} from "taro-ui";
+import {connect} from "@tarojs/redux"
+import {dispatchAccount, type, getRecentRecord} from "../../../actions/home";
 import fetch from "@utils/request"
-import { API_RECORD } from '@constants/api'
+import {API_RECORD} from '@constants/api'
 import moment from "moment"
 import './index.scss'
 
 @connect(state => state.home, dispatch => ({
-  dispatchAccount() {
-    dispatch(dispatchAccount())
-  },
-  dispatchType() {
-    dispatch(type())
-  },
-  getRecentRecord() {
-    dispatch(getRecentRecord())
-  }
-})
+    dispatchAccount() {
+      dispatch(dispatchAccount())
+    },
+    dispatchType() {
+      dispatch(type())
+    },
+    getRecentRecord() {
+      dispatch(getRecentRecord())
+    }
+  })
 )
 export default class RecordModal extends Taro.Component {
   state = {
@@ -69,18 +69,18 @@ export default class RecordModal extends Taro.Component {
   }
 
   handleConfirm() {
-    const { cost, isOutcome, dateSel, memo, selectedType } = this.state
+    const {cost, isOutcome, dateSel, memo, selectedType} = this.state
     const payload = {
       consumption: Number(cost),
       isOut: isOutcome,
       typeId: selectedType,
       remark: memo,
-      time: dateSel+" "+ moment(Date()).format('YYYY-MM-DD HH:mm:ss').split(" ")[1]
+      time: dateSel + " " + moment(Date()).format('YYYY-MM-DD HH:mm:ss').split(" ")[1]
     }
     Taro.showLoading({
       title: '少女记账中...'
     })
-    fetch({ url: API_RECORD, showToast: true, payload, method: 'POST' }).then(res => {
+    fetch({url: API_RECORD, showToast: true, payload, method: 'POST'}).then(res => {
       if (res) {
         this.props.dispatchAccount()
         this.props.getRecentRecord()
@@ -110,8 +110,8 @@ export default class RecordModal extends Taro.Component {
 
 
   render() {
-    const { isOpened, title, onClose, recordType } = this.props;
-    const { isOutcome, isClose } = this.state
+    const {isOpened, title, onClose, recordType} = this.props;
+    const {isOutcome, isClose} = this.state
     const month = this.state.dateSel.split("-")[1]
     const day = this.state.dateSel.split("-")[2]
     const end = moment(Date()).format('YYYY-MM-DD')
@@ -122,8 +122,10 @@ export default class RecordModal extends Taro.Component {
           <Radio style='margin-left: 20rpx' value='未选中'>未选中</Radio> */}
           <View className="home-modal-picker">
             <View className="tags">
-              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle onClick={this.handleChooseType.bind(this)}>支出</AtTag>
-              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle onClick={this.handleChooseType.bind(this)}>收入</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={isOutcome} circle
+                     onClick={this.handleChooseType.bind(this)}>支出</AtTag>
+              <AtTag type='primary' className="home-modal-tag" active={!isOutcome} circle
+                     onClick={this.handleChooseType.bind(this)}>收入</AtTag>
             </View>
             <View className="home-modal-picker-bg">
               <Picker mode='date' onChange={this.onDateChange} end={end}>
@@ -137,7 +139,8 @@ export default class RecordModal extends Taro.Component {
             {
               recordType.map((item) => {
                 // return(<AtTag circle className="home-modal-swiper-item" active={this.judgeType.bind(this,item._id)} onClick={this.selectType.bind(this,item._id)}>{item.name}</AtTag>)
-                return (<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)} onClick={this.selectType.bind(this, item._id)}>{item.name}</AtTag>)
+                return (<AtTag circle className="home-modal-swiper-item" active={this.judgeType(item._id)}
+                               onClick={this.selectType.bind(this, item._id)}>{item.name}</AtTag>)
               })
             }
           </ScrollView>
@@ -162,7 +165,6 @@ export default class RecordModal extends Taro.Component {
             </AtForm>
           </View>
           <AtButton type="primary" onClick={this.handleConfirm.bind(this)}>确认</AtButton>
-
         </View>
       </AtFloatLayout>
     );

@@ -41,7 +41,614 @@ button {
   display: flex;
   flex-direction: column;
 }
+
 .taro_page {
   flex: 1;
 }
+
 /*postcss-pxtransform rn eject disable*/
+// 2019-12-29 hh
+.all-loading-s {
+  height: 1000px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  z-index: 99999;
+  background: #c8c8c8;
+}
+
+
+.main {
+  width: 100%;
+}
+
+.hide {
+  display: none;
+}
+
+.load {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+}
+
+.load .k-line {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+.load .k-line2-1 {
+  animation: k-loadingA 1.5s 1s infinite;
+  background-color: #F44336;
+}
+
+.load .k-line2-2 {
+  animation: k-loadingA 1.5s .5s infinite;
+  background-color: #E91E63;
+}
+
+.load .k-line2-3 {
+  animation: k-loadingA 1.5s 0s infinite;
+  background-color: #9C27B0;
+}
+
+/* loading动画 */
+@keyframes k-loadingA {
+  0% {
+    height: 15px;
+  }
+  50% {
+    height: 35px;
+  }
+  100% {
+    height: 15px;
+  }
+}
+
+#mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0;
+  z-index: 99999;
+}
+
+
+.img-wrapper image {
+  height: 100%;
+  width: 100%
+}
+
+.acea-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.acea-row .row-top {
+  align-items: flex-start;
+}
+
+.acea-row .row-middle {
+  align-items: center;
+}
+
+.acea-row .row-bottom {
+  align-items: flex-end;
+}
+
+.acea-row .row-left {
+  justify-content: flex-start;
+}
+
+.acea-row .row-center {
+  justify-content: center;
+}
+
+.acea-row .row-right {
+  justify-content: flex-end;
+}
+
+.acea-row .row-between {
+  justify-content: space-between;
+}
+
+.acea-row .row-around {
+  justify-content: space-around;
+}
+
+.acea-row .row-column {
+  flex-direction: column;
+}
+
+.acea-row .row-column-between {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.acea-row .row-column-around {
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.acea-row .row-center-wrapper {
+  align-items: center;
+  justify-content: center;
+}
+
+.acea-row .row-between-wrapper {
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.acea-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.acea-nowrap {
+  display: flex;
+  flex-wrap: nowrap
+}
+
+.acea-row.row-top {
+  align-items: flex-start;
+}
+
+.acea-row.row-middle {
+  align-items: center;
+}
+
+.acea-row.row-bottom {
+  align-items: flex-end;
+}
+
+.acea-row.row-left {
+  justify-content: flex-start;
+}
+
+.acea-row.row-center {
+  justify-content: center;
+}
+
+.acea-row.row-right {
+  justify-content: flex-end;
+}
+
+.acea-row.row-between {
+  justify-content: space-between;
+}
+
+.acea-row.row-around {
+  justify-content: space-around;
+}
+
+.acea-row.row-column {
+  flex-direction: column;
+}
+
+.acea-row.row-column-between {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.acea-row.row-column-around {
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.acea-row.row-center-wrapper {
+  align-items: center;
+  justify-content: center;
+}
+
+.acea-row.row-between-wrapper {
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/*优惠券样式*/
+
+.sawtooth {
+  /* 注意：radial-gradient是作为background-image属性设置的，而纯色#e24141是作为background-color属性设置的 */
+  background: border-box radial-gradient(transparent 0, transparent 5px, #F6B500 5px), padding-box #F6B500;
+  background-size: 15px 15px;
+  background-position: 8px 3px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: relative;
+}
+
+.sawtooth:before {
+  content: ' ';
+  display: block;
+  /* 用相同的颜色覆盖 */
+  background-color: #e24141;
+  /* 绝对定位，遮住中间所有的洞，只保留边角的锯齿 */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* 为锯齿保留的距离 */
+  left: 10px;
+  right: 10px;
+  z-index: -1;
+}
+
+
+.line-normal {
+  width: 100%; /* 分隔线的长度 */
+  margin: auto;
+  text-align: center;
+  font-size: 24 rpx;
+  color: #F2F2F2;
+  background: #f6f6f6;
+  height: 2px;
+}
+
+/*////////////////////    字体    ////////////////////////*/
+.clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.clamp1, .clamp2, .clamp3, .clamp4, .clamp5 {
+  display: -webkit-box !important;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+
+.clamp1 {
+  -webkit-line-clamp: 1;
+}
+
+.clamp2 {
+  -webkit-line-clamp: 2;
+}
+
+.clamp3 {
+  -webkit-line-clamp: 3;
+}
+
+.clamp4 {
+  -webkit-line-clamp: 4;
+}
+
+.clamp5 {
+  -webkit-line-clamp: 5;
+}
+
+.mar-top-20 {
+  margin-top: 20px;
+}
+
+.mar-bot-20 {
+  margin-bottom: 20px;
+}
+
+.mar-l-20 {
+  margin-left: 20px;
+}
+
+.mar-r-20 {
+  margin-right: 20px;
+}
+
+
+.padding-all-10 {
+  padding:10px
+}
+padding-lr-10 {
+  padding-left:10px;
+  padding-right:10px;
+}
+.pad-top-20 {
+  padding-top: 20px;
+}
+
+.pad-bot-20 {
+  padding-bottom: 20px;
+}
+
+.pad-l-20 {
+  padding-left: 20px;
+}
+
+.pad-r-20 {
+  padding-right: 20px;
+}
+
+
+.mar-top-15 {
+  margin-top: 15px;
+}
+
+.mar-bot-15 {
+  margin-bottom: 15px;
+}
+
+.mar-l-15 {
+  margin-left: 15px;
+}
+
+.mar-r-15 {
+  margin-right: 15px;
+}
+
+.pad-top-15 {
+  padding-top: 15px;
+}
+
+.pad-bot-15 {
+  padding-bottom: 15px;
+}
+
+.pad-l-15 {
+  padding-left: 15px;
+}
+
+.pad-r-15 {
+  padding-right: 15px;
+}
+
+.mar-top-10 {
+  margin-top: 10px;
+}
+
+.mar-bot-10 {
+  margin-bottom: 10px;
+}
+
+.mar-l-10 {
+  margin-left: 10px;
+}
+
+.mar-r-10 {
+  margin-right: 10px;
+}
+
+.pad-top-10 {
+  padding-top: 10px;
+}
+
+.pad-bot-10 {
+  padding-bottom: 10px;
+}
+
+.pad-l-10 {
+  padding-left: 10px;
+}
+
+.pad-r-10 {
+  padding-right: 10px;
+}
+
+
+/*////////////////////    宽高    ////////////////////////*/
+.w15 {
+  width: 15%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.w25 {
+  width: 25%;
+}
+
+.w30 {
+  width: 30%;
+}
+
+.w33 {
+  width: 33%;
+}
+
+.w50 {
+  width: 50%;
+}
+
+.w75 {
+  width: 75%;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.h33 {
+  height: 33%;
+}
+
+.h50 {
+  height: 50%;
+}
+
+.h66 {
+  height: 66%;
+}
+
+.h75 {
+  height: 75%;
+}
+
+.h100 {
+  height: 100%;
+}
+
+.hw-100 {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+
+/*
+  左靠16px
+*/
+.margin-left-16 {
+  margin-left: 16px;
+}
+
+.margin-lr-16 {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.normal-h1 {
+  height: 50 rpx;
+  font-size: 18px;
+  line-height: 50 rpx;
+  font-weight: bolder;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+/*
+  大标题的通用高
+*/
+.in-head {
+  height: 50 rpx;
+  text-align: left;
+  line-height: 50 rpx;
+}
+
+/*
+  大标题前面的块
+*/
+.sign {
+  display: inline-block;
+  padding: 10px 4px;
+  background: red;
+  margin-right: 10px;
+  margin-bottom: -3px;
+}
+
+/*////////////////////    宽高    ////////////////////////*/
+
+.border-bottom-grap {
+  border-bottom:1px #e5e5e5 solid;
+}
+/*
+    border-radius
+*/
+.radius-t-lr {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.radius-b-lr {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.fz-10 {
+  font-size: 10px;
+}
+
+.fz-12 {
+  font-size: 12px;
+}
+
+.fz-14 {
+  font-size: 14px;
+}
+
+
+.fz-16 {
+  font-size: 16px;
+}
+
+.fz-20 {
+  font-size: 20px;
+}
+
+.fz-24 {
+  font-size: 24px;
+}
+
+.fz-time {
+  font-size: 10px;
+  color: #999;
+}
+
+.fz-b-12 {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.fz-b-14 {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.fz-b-20 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.fz-b-24 {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+
+.fz-b-16 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.fz-c-white {
+  color: white;
+}
+
+.fz-c-FE4B40 {
+  color: #FE4B40;
+}
+
+.fz-c-grap {
+  color: #6D7278;
+}
+
+/*
+  右下角小图标
+*/
+.round-click {
+  height: 100 rpx !important;
+  width: 100 rpx !important;
+  background-color: #fff !important;
+  border-radius: 100% !important;
+  position: fixed !important;
+  right: 20 rpx !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9 !important;
+  line-height: 14px !important;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.28) !important;
+}
+
+.round-click image {
+  height: 18px;
+  width: 18px
+}
+
+.round-click button {
+  font-size: 12px;
+  color: #6D7278;
+}
+
