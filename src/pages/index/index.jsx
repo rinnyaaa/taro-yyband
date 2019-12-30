@@ -94,18 +94,6 @@ class Index extends Component {
         //Taro的坑！！！！！！！！！！
         // <View className="home-nodata" style={{ height, width: "100%" }}>
         <View className="home-nodata" style={"height:" + height}>
-          {/* {records&&records.length === 0 && (
-            <View style="text-align:center">
-              <Image style="width:138px;height:125px" src={nodata}></Image>
-              <View>
-                <Text className="home-nodata-txt">开始记账吧</Text>
-              </View>
-            </View>
-          )}
-          {(records&&records.length!==0) && (
-            <View style="width:90%">
-            </View>
-          )} */}
           <RecentRecords />
 
           <View style="margin:20px 62px;width:60%">
@@ -120,14 +108,7 @@ class Index extends Component {
         </View>
       );
     };
-    // if (!this.state.loaded) {
-    //   return (
-    //     <AtActivityIndicator
-    //       mode="center"
-    //       content="加载中..."
-    //     ></AtActivityIndicator>
-    //   );
-    // }
+ 
     const tabList = [{ title: "本月账单" }, { title: "统计" }];
     return (
       <View className="index">
@@ -137,9 +118,9 @@ class Index extends Component {
           tabList={tabList}
           onClick={this.handleClick.bind(this)}
         >
-          {/* <AtNoticebar marquee icon="volume-plus" close={true}>
-            大碗宽面正在烧制中......
-          </AtNoticebar> */}
+          <AtNoticebar marquee icon="volume-plus" close={true}>
+            支线的大碗宽面正在烧制中......
+          </AtNoticebar>
 
           <AtTabsPane current={this.state.current} index={0}>
             {/* 本月账单 */}
